@@ -28,6 +28,37 @@ public class Traverse {
     v45.neighbors = new ArrayList<>(List.of(v23));
     v23.neighbors = new ArrayList<>(List.of());
     v67.neighbors = new ArrayList<>(List.of(v91));
+
+    printGraph(v3);
+    System.out.println("\nsum of graph: " + sumGraph(v3));
+    
   }
+
+  public static void printGraph(Vertex<?> current, Set<Vertex<?>> vertexes){
+    if(current == null || vertexes.contains(current)) return;
+    System.out.println(current.data);
+    vertexes.add(current);
+    for(Vertex<?> neighbor : current.neighbors){
+      printGraph(neighbor, vertexes);
+    }
+  }
+
+  public static void printGraph(Vertex<?> current){
+    printGraph(current, new HashSet<Vertex<?>>());
+  }
+
+  public static int sumGraph(Vertex<Integer> current){
+    return sumGraph(current, new HashSet<Vertex<Integer>>());
+  }
+
+  public static int sumGraph(Vertex<Integer> current, Set<Vertex<Integer>> vertexes){
+    if(current == null || vertexes.contains(current)) return 0;
+    int sum = current.data;
+    vertexes.add(current);
+      for(var neighbor : current.neighbors){
+        sum += sumGraph(neighbor, vertexes);
+      }
+    return sum;
+  } 
 
 }
